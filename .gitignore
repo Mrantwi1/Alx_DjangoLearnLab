@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ignore system and temporary files
 __pycache__/
 *.pyc
@@ -16,3 +17,19 @@ venv/
 /Music/
 /Pictures/
 /Videos/
+=======
+# Python and Django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+
+# VS Code
+.vscode/
+
+# Virtual environments
+env/
+venv/
+*.env
+>>>>>>> 7e906a7662f9e4da9024642610f3ee9f33d3afad
