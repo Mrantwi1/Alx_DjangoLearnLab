@@ -1,0 +1,18 @@
+# Ignore system and temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.db
+.env
+venv/
+.vscode/
+*.sqlite3
+
+# Ignore Windows user directories
+/AppData/
+/Desktop/
+/Documents/
+/Downloads/
+/Music/
+/Pictures/
+/Videos/
