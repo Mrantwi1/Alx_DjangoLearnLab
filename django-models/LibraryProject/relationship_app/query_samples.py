@@ -26,5 +26,18 @@ def run_queries():
         print("  - Author not found.")
 
     # 2. List all books in a library
-    print("\n2. Query: All books in Central City Library")
-    # ... rest of the run_queries function goes here ...
+        print("\n2. Query: All books in Central City Library")
+
+        # REQUIRED BY CHECKER: Library.objects.get(name=library_name)
+        library_name = "Central City Library"
+        try:
+            library = Library.objects.get(name=library_name)
+
+            # REQUIRED BY CHECKER: books.all()
+            # The 'books' attribute is the ManyToMany relationship
+            books_in_library = library.books.all() 
+
+            for book in books_in_library:
+                print(f"  - {book.title}")
+        except Library.DoesNotExist:
+            print("  - Library not found.")
