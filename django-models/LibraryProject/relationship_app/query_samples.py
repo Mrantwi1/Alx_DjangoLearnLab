@@ -41,3 +41,22 @@ def run_queries():
                 print(f"  - {book.title}")
         except Library.DoesNotExist:
             print("  - Library not found.")
+
+     # 3. Retrieve the librarian for a library
+        print("\n3. Query: Librarian for Central City Library")
+        library_name = "Central City Library"
+        try:
+            # First, get the Library instance
+            library = Library.objects.get(name=library_name)
+
+            # REQUIRED BY CHECKER: Librarian.objects.get(library=...)
+            # We use the Library instance to filter the Librarian model via the OneToOne relationship
+            librarian_instance = Librarian.objects.get(library=library)
+
+            librarian_name = librarian_instance.name
+            print(f"  - The librarian is {librarian_name}.")
+
+        except Library.DoesNotExist:
+            print("  - Library not found.")
+        except Librarian.DoesNotExist:
+            print("  - No librarian found for this library.")
