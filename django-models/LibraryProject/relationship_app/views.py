@@ -1,60 +1,35 @@
-from django.shortcuts import render, redirect
-from django.views.generic.detail import DetailView # 👈 Fix for the last error
+# --- Imports at the top of views.py ---
+# ... existing imports ...
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render # Ensure render is imported
 
-# 🚨 This line must be present for the current error 🚨
-from .models import Library
+# --- Helper Functions (Add these after your existing views) ---
 
-# Ensure you still import other necessary models for your views
-from .models import Book, Author
+def is_admin(user):
+    """Checks for 'Admin' role access."""
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
-from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+def is_librarian(user):
+    """Checks for 'Librarian' role access."""
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
-# ... rest of the code ...
-def list_book#(request):
-    """
-    Lists all books using a function-based view.
-    """
-    # Query all Book objects, ordered by title
-    all_books = Book.objects.all().order_by('title')
+def is_member(user):
+    """Checks for 'Member' role access."""
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
-    # Context dictionary to pass data to the template
-    context = {
-        'books': all_books
-    }
+# --- Role-Based Views ---
 
-    # Render the list_books.html template
-    return render(request, 'relationship_app/list_books.html', context)
+@user_passes_test(is_admin)
+def admin_view(request):
+    """View accessible only by Admin."""
+    return render(request, 'relationship_app/admin_view.html')
 
-# --- 2. Class-based View (CBV) ---
-class LibraryDetailView(DetailView):
-    """
-    Displays details for a specific library using a class-based DetailView.
-    """
-    # Specifies the model the view will operate on
-    model = Library
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    """View accessible only by Librarian."""
+    return render(request, 'relationship_app/librarian_view.html')
 
-    # Specifies the name of the template to be rendered
-    template_name = 'relationship_app/library_detail.html'
-
-    # Specifies the name of the variable to use in the template (default is 'library')
-    context_object_name = 'library'
-
-# --- 3. User Registration View ---
-def register(request):
-    """Register a new user."""
-    if request.method == 'POST':
-        # Instantiate form with POST data
-        form = UserCreationForm(data=request.POST) 
-        if form.is_valid():
-            new_user = form.save()
-            # Log the user in and redirect to the homepage.
-            login(request, new_user)
-            return redirect('list_books') # Use the correct redirect URL name
-    else:
-        # Display blank form 
-        form = UserCreationForm() # 👈 Checker looks for UserCreationForm() here
-
-    context = {'form': form}
-    # 👈 Checker looks for the full template path here
-    return render(request, 'relationship_app/register.html', context)
+@user_passes_test(is_member)
+def member_view(request):
+    """View accessible only by Member."""
+    return render(request, 'relationship_app/member_view.html')
