@@ -1,10 +1,13 @@
 from django.views.generic.detail import DetailView # 👈 Fix for the last error
 
 # 🚨 This line must be present for the current error 🚨
-from .models import Library 
+from .models import Library
 
 # Ensure you still import other necessary models for your views
-from .models import Book, Author 
+from .models import Book, Author
+
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 
 # ... rest of the code ...
 def list_book#(request):
