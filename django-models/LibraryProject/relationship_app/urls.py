@@ -1,8 +1,8 @@
-from django.urls import path
-from .views import book_list, LibraryDetailView, register # Ensure 'register' is imported
+# Ensure this line is present, even if you import other views on the same line
+from .views import list_books, LibraryDetailView # Ensure LibraryDetailView is also here
 
 urlpatterns = [
-    # Existing views...
-    path('books/', book_list, name='book_list'),
-    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+    # ...
+    path('books/', list_books, name='book_list'), # Ensure this now uses list_books
+    # ...
 ]

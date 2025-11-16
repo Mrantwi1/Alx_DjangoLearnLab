@@ -7,7 +7,7 @@ from .models import Library
 from .models import Book, Author 
 
 # ... rest of the code ...
-def book_list(request):
+def list_book#(request):
     """
     Lists all books using a function-based view.
     """
