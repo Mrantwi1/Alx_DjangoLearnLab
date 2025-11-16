@@ -1,23 +1,20 @@
 from django.urls import path
-from .views import book_list, LibraryDetailView, register # Ensure 'register' is imported
 
-# Import built-in auth views
-from django.contrib.auth.views import LoginView, LogoutView
+# 🚨 REQUIRED CHANGE 1: Import the entire views module 🚨
+from . import views 
+
+# Import built-in auth views for reference
+from django.contrib.auth.views import LoginView, LogoutView 
 
 urlpatterns = [
-    # Existing App Views
-    path('books/', book_list, name='book_list'),
-    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+    # Existing App Views (use dot notation now if necessary, or keep old imports if they work)
+    path('books/', views.list_books, name='book_list'), 
+    path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library_detail'),
 
-    # --- Authentication Views ---
+    # 🚨 REQUIRED CHANGE 2: Use views.register 🚨
+    path('register/', views.register, name='register'),
 
-    # Registration (Custom View)
-    path('register/', register, name='register'),
-
-    # Login (Built-in View)
+    # Authentication Views
     path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
-
-    # Logout (Built-in View)
-    # The next_page='login' redirects to the login page after successful logout.
     path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html', next_page='login'), name='logout'),
 ]
