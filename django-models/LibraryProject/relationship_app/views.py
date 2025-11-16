@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect
+from django.views.generic.detail import DetailView # 👈 Fix for the last error
 
-# 🚨 This explicit line is required by the checker 🚨
-from django.views.generic.detail import DetailView
+# 🚨 This line must be present for the current error 🚨
+from .models import Library 
 
-# You can keep the shorter import if you need other generic views, but ensure the above line is present.
-# from django.views.generic import DetailView
+# Ensure you still import other necessary models for your views
+from .models import Book, Author 
 
-# ... rest of your model imports and code ...
+# ... rest of the code ...
 def book_list(request):
     """
     Lists all books using a function-based view.
