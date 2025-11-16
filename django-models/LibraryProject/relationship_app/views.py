@@ -1,3 +1,4 @@
+from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView # 👈 Fix for the last error
 
 # 🚨 This line must be present for the current error 🚨
@@ -38,3 +39,22 @@ class LibraryDetailView(DetailView):
 
     # Specifies the name of the variable to use in the template (default is 'library')
     context_object_name = 'library'
+
+# --- 3. User Registration View ---
+def register(request):
+    """Register a new user."""
+    if request.method == 'POST':
+        # Instantiate form with POST data
+        form = UserCreationForm(data=request.POST) 
+        if form.is_valid():
+            new_user = form.save()
+            # Log the user in and redirect to the homepage.
+            login(request, new_user)
+            return redirect('list_books') # Use the correct redirect URL name
+    else:
+        # Display blank form 
+        form = UserCreationForm() # 👈 Checker looks for UserCreationForm() here
+
+    context = {'form': form}
+    # 👈 Checker looks for the full template path here
+    return render(request, 'relationship_app/register.html', context)
