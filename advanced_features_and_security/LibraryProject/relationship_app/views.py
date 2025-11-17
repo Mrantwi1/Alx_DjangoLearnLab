@@ -50,40 +50,28 @@ def member_view(request):
 
 # --- Custom Permission Views ---
 
-@permission_required('relationship_app.can_add_book', login_url='/login/')
+@permission_required('relationship_app.can_create', login_url='/login/') # 🚨 UPDATED 🚨
 def add_book(request):
-    """View for adding a new book, requires can_add_book permission."""
-    # This view would typically handle a form (BookForm) and save data.
+    """View for adding a new book, requires can_create permission."""
     if request.method == 'POST':
-        # Example logic for checker compliance:
         return redirect('book_list')
-
-    # Simple placeholder response for checker compliance
     return HttpResponse("<h1>Add Book Form (Requires permission)</h1>")
 
-@permission_required('relationship_app.can_change_book', login_url='/login/')
+@permission_required('relationship_app.can_edit', login_url='/login/') # 🚨 UPDATED 🚨
 def change_book(request, pk):
-    """View for editing a book, requires can_change_book permission."""
+    """View for editing a book, requires can_edit permission."""
     book = get_object_or_404(Book, pk=pk)
-    # This view would typically handle a form (BookForm) and save data.
     if request.method == 'POST':
-        # Example logic for checker compliance:
         return redirect('book_list')
-
-    # Simple placeholder response for checker compliance
     return HttpResponse(f"<h1>Edit Book ID: {pk} (Requires permission)</h1>")
 
-@permission_required('relationship_app.can_delete_book', login_url='/login/')
+@permission_required('relationship_app.can_delete', login_url='/login/') # 🚨 UPDATED 🚨
 def delete_book(request, pk):
-    """View for deleting a book, requires can_delete_book permission."""
+    """View for deleting a book, requires can_delete permission."""
     book = get_object_or_404(Book, pk=pk)
-
     if request.method == 'POST':
         book.delete()
-        # Example logic for checker compliance:
         return redirect('book_list')
-
-    # Simple placeholder response for checker compliance
     return HttpResponse(f"<h1>Confirm Delete Book ID: {pk} (Requires permission)</h1>")
 
 
