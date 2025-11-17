@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List Placeholder</title>
+</head>
+<body>
+    <h1>Bookshelf Book List</h1>
+    <p>This template confirms the existence of the secure view link.</p>
+    <ul>
+        {% for book in books %}
+        <li>{{ book.title }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
