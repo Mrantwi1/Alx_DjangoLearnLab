@@ -1,20 +1,22 @@
-from .views import add_book, change_book, delete_book, list_books, LibraryDetailView
 from django.urls import path
-from .views import LibraryDetailView # Import the class directly
-from . import views # Ensure this line is present to import the views module
+
+# 🚨 REQUIRED IMPORTS 🚨
+from .views import add_book, change_book, delete_book, list_books, LibraryDetailView
 
 urlpatterns = [
-    # ... existing paths (admin-dashboard/, librarian-portal/, member-area/) ...
+    # RBAC Views
+    path('admin-dashboard/', list_books, name='admin_view'),
+    path('librarian-portal/', list_books, name='librarian_view'),
+    path('member-area/', list_books, name='member_view'),
 
-    urlpatterns = [
-    # ... your existing paths ...
+    # Custom Permissions (CRUD) Views
+    path('add_book/', add_book, name='add_book'),
+    path('edit_book/<int:pk>/', change_book, name='change_book'),
+    path('delete_book/<int:pk>/', delete_book, name='delete_book'),
 
-    path('add_book/', add_book, name='add_book'), # Changed from views.add_book
-    path('edit_book/<int:pk>/', change_book, name='change_book'), # Changed from views.change_book
-    path('delete_book/<int:pk>/', delete_book, name='delete_book'), # Changed from views.delete_book
+    # Function-based View (Required for list_books)
+    path('books/', list_books, name='book_list'),
 
-    # This path must use the view name the checker requires
-    path('books/', list_books, name='book_list'), # 🚨 MUST use list_books 🚨
-
+    # Class-based View (Required for library_detail)
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
 ]
