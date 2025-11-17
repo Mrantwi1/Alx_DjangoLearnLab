@@ -185,3 +185,38 @@ SESSION_COOKIE_HTTPONLY = True
 # CSP_DEFAULT_SRC = ("'none'",)
 # CSP_STYLE_SRC = ("'self'",)
 # CSP_SCRIPT_SRC = ("'self'",)
+
+# --- Step 1: HTTPS Enforcement and HSTS ---
+
+# Redirects all non-HTTPS requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# Instructs browsers to only access the site via HTTPS for 1 year (31536000 seconds)
+SECURE_HSTS_SECONDS = 31536000
+
+# Includes all subdomains in the HSTS policy
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# Allows the domain to be submitted for HSTS preloading
+SECURE_HSTS_PRELOAD = True
+
+
+# --- Step 2: Secure Cookies (Ensure these are True) ---
+
+# Ensures session cookies are only transmitted over HTTPS
+SESSION_COOKIE_SECURE = True
+
+# Ensures CSRF cookies are only transmitted over HTTPS
+CSRF_COOKIE_SECURE = True
+
+
+# --- Step 3: Secure Headers (Ensure these are configured) ---
+
+# Prevents site from being framed (Clickjacking protection)
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevents browsers from MIME-sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enables the browser's XSS filter
+SECURE_BROWSER_XSS_FILTER = True
