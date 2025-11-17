@@ -1,6 +1,7 @@
 # --- Imports at the top of views.py ---
 # ... existing imports ...
-from django.views.generic import DetailView # 👈 Ensure this is imported
+from django.views.generic.detail import DetailView
+from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404 # Ensure these are imported
 from django.contrib.auth.decorators import permission_required # 👈 ADD THIS IMPORT
 from .models import Book
