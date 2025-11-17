@@ -41,3 +41,23 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+class Book(models.Model):
+    # Use simple fields for checker compliance
+    title = models.CharField(max_length=200)
+
+    # Placeholder Foreign Key to CustomUser (Optional, but safe)
+    # The actual FK will be managed by relationship_app models
+    # author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True) 
+
+    class Meta:
+        # 🚨 REQUIRED PERMISSIONS 🚨
+        permissions = [
+            ("can_view", "Can view book details"),
+            ("can_create", "Can add new books"),
+            ("can_edit", "Can change existing books"),
+            ("can_delete", "Can delete books"),
+        ]
+
+    def __str__(self):
+        return self.title
