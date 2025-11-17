@@ -56,21 +56,21 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.role}"
 
-# Book model
 class Book(models.Model):
     title = models.CharField(max_length=200)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books')
+    # ... other fields ...
+
+    class Meta:
+        # Add custom permissions for the CRUD operations
+        permissions = [
+            ("can_view", "Can view book details"),
+            ("can_create", "Can add new books"),
+            ("can_edit", "Can change existing books"),
+            ("can_delete", "Can delete books"),
+        ]
 
     def __str__(self):
         return self.title
-
-    # 🚨 ADD THIS NESTED CLASS 🚨
-    class Meta:
-        permissions = (
-            ("can_add_book", "Can add new book entries"),
-            ("can_change_book", "Can edit existing book entries"),
-            ("can_delete_book", "Can delete book entries"),
-        )
 
 # --- Custom User Manager (Step 3) ---
 class CustomUserManager(BaseUserManager):
