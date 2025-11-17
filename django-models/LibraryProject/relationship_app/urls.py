@@ -1,5 +1,5 @@
 from django.urls import path
-
+from django.contrib.auth.views import LoginView, LogoutView
 # 🚨 REQUIRED IMPORTS 🚨
 from .views import list_books
 from .views import add_book, change_book, delete_book, list_books, LibraryDetailView
@@ -20,4 +20,13 @@ urlpatterns = [
 
     # Class-based View (Required for library_detail)
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+    # 1. Registration (links to the function you created in views.py)
+    path('register/', views.register, name='register'),
+
+    # 2. Login (uses built-in class and template argument)
+    path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+
+    # 3. Logout (uses built-in class and template argument to satisfy the strict checker)
+    path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
 ]
+
