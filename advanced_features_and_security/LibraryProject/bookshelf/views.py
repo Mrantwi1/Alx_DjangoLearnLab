@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse # 🚨 FIXED IMPORT 🚨
 
+from .forms import ExampleForm
+
 # --- Functions with Required Strings ---
 
 # Typically, book_list should only require 'can_view', but we add the exception argument
