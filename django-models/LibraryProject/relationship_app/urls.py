@@ -1,3 +1,4 @@
+from .views import add_book, change_book, delete_book, list_books, LibraryDetailView
 from django.urls import path
 from .views import LibraryDetailView # Import the class directly
 from . import views # Ensure this line is present to import the views module
