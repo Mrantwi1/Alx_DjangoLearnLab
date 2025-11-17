@@ -1,5 +1,6 @@
-# --- Imports at the top of views.py ---
-# ... existing imports ...
+# Add these two lines to your imports at the top:
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404 # Ensure these are imported
@@ -88,7 +89,7 @@ def delete_book(request, pk):
 
 # --- Function-based View ---
 
-def book_list(request):
+def list_books(request):
     """Lists all books using a function-based view."""
     # 🚨 Checker requires this specific query 🚨
     books = Book.objects.all() 
@@ -112,3 +113,21 @@ class LibraryDetailView(DetailView):
 
     # The template to render
     template_name = 'relationship_app/library_detail.html'
+
+# --- Authentication Views ---
+
+def register(request):
+    """Handles user registration using the built-in form."""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user) # Log the user in immediately
+            return redirect('member_view') # Redirect to a safe page after login
+    else:
+        form = UserCreationForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'relationship_app/register.html', context)
