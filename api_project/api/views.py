@@ -1,15 +1,15 @@
-from rest_framework import viewsets
+# api/views.py
+from rest_framework import generics
 from .models import Book
 from .serializers import BookSerializer
 
-class BookViewSet(viewsets.ModelViewSet):
+# This view is named BookList and extends ListAPIView, as required.
+class BookList(generics.ListAPIView):
     """
-    A ViewSet for viewing and editing book instances.
-    This class automatically provides standard RESTful endpoints:
-    GET (list, retrieve), POST (create), PUT/PATCH (update), DELETE (destroy).
+    API View to list all books using a read-only ListAPIView.
+    Endpoint: /api/books/
     """
-    # 1. queryset: Defines the data source (all Book objects)
+    # The set of objects to work with
     queryset = Book.objects.all()
-    
-    # 2. serializer_class: Specifies which serializer to use for data formatting
+    # The serializer used for data conversion
     serializer_class = BookSerializer

@@ -2,6 +2,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import BookViewSet 
+from .views import BookList
 
 # Initialize the Router
 # The router automatically generates all required URL patterns for the ViewSet.
@@ -15,4 +16,5 @@ router.register(r'books', BookViewSet)
 urlpatterns = [
     # Include the router's URLs under the root path of the app
     path('', include(router.urls)),
+    path('books-list/', BookList.as_view(), name='books-list'),
 ]
