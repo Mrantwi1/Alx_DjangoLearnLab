@@ -1,5 +1,6 @@
 # api/views.py
 from rest_framework import generics, viewsets
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .models import Book
 from .serializers import BookSerializer
 
@@ -21,3 +22,12 @@ class BookViewSet(viewsets.ModelViewSet):
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+class BookViewSet(viewsets.ModelViewSet):
+    """
+    A ViewSet for full CRUD operations. Requires the user to be authenticated.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    # NEW PERMISSION: Require the user to be fully authenticated for all operations
+    permission_classes = [IsAuthenticated]
