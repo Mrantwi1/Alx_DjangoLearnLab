@@ -143,3 +143,17 @@ SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
+
+# Static and Media files configuration for production
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# AWS S3 Storage placeholder (Common production setup)
+# AWS_ACCESS_KEY_ID = 'your-access-key-id'
+# AWS_SECRET_ACCESS_KEY = 'your-secret-access-key'
+# AWS_STORAGE_BUCKET_NAME = 'your-bucket-name'
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
