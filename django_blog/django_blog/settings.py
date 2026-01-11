@@ -132,3 +132,6 @@ STATIC_URL = 'static/'
 
 # Optional: If you have a global static folder
 # STATICFILES_DIRS = [BASE_DIR / "static"]
+
+LOGIN_REDIRECT_URL = 'profile'
+LOGOUT_REDIRECT_URL = 'login'
