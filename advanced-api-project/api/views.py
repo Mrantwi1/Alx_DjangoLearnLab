@@ -1,45 +1,32 @@
-from rest_framework import generics, permissions, filters
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Book
 from .serializers import BookSerializer
 
-# BookListView: Handles GET (list) with filtering, searching, and ordering.
-# Accessible by anyone (unauthenticated).
-class BookListView(generics.ListAPIView):
+# List and Detail views allow unauthenticated users to read (GET), 
+# but require authentication for write operations (POST).
+class BookListView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
-    
-    # Filtering, Searching, and Ordering configurations
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['title', 'author__name', 'publication_year']
-    search_fields = ['title', 'author__name']
-    ordering_fields = ['title', 'publication_year']
+    permission_classes = [IsAuthenticatedOrReadOnly] # Allows GET for all, POST for auth only
 
-# BookDetailView: Handles GET (single instance).
-# Accessible by anyone.
-class BookDetailView(generics.RetrieveAPIView):
+class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly] # Allows GET for all, PUT/DELETE for auth only
 
-# BookCreateView: Handles POST (creation).
-# Restricted to authenticated users.
+# If you prefer separate views for Create, Update, and Delete as per Step 1:
 class BookCreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated] # Strictly authenticated
 
-# BookUpdateView: Handles PUT/PATCH (editing).
-# Restricted to authenticated users.
 class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated] # Strictly authenticated
 
-# BookDeleteView: Handles DELETE.
-# Restricted to authenticated users.
 class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated] # Strictly authenticated
